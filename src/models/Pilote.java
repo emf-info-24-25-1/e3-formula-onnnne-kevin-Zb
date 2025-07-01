@@ -3,6 +3,7 @@ package models;
 
 public class Pilote {
     public final static int NOMBRE_PNEUS_EN_RESERVE = 16;
+    //MR Il faut mettre final pour indiquer que cette valeur ne changera pas pour les deux premiers attributs
     private String nom;
     private String nationalite;
     private int nombrePoint;
@@ -49,6 +50,8 @@ public class Pilote {
     public Pneu retirerPneuEnReserve(TypePneu type){
         Pneu pneu = null;
         for (int i = 0; i < pneusEnReserve.length; i++) {
+            //MR Il faut aussi vérifier si pneusEnReserve[i] n'est pas null avant de comparer les types
+            //MR Il faut mieux utiliser == pour comparer les types de pneus
             if (pneusEnReserve[i].getType().equals(type)) {
                 pneu = pneusEnReserve[i];
                 pneusEnReserve[i] = null;
@@ -61,6 +64,8 @@ public class Pilote {
     public int compterNombrePneusEnReserveDeType(TypePneu type){
         int total = 0;
         for (int i = 0; i < pneusEnReserve.length; i++) {
+            //MR Il faut aussi vérifier si pneusEnReserve[i] n'est pas null avant de comparer les types
+            //MR Il faut mieux utiliser == pour comparer les types de pneus
             if (pneusEnReserve[i].getType().equals(type)) {
                 total++;
             }
@@ -79,6 +84,8 @@ public class Pilote {
     }
 
     public Pneu[] getPneusEnReserveSansTrous(){
+        //MR C'est pas mal, mais il faut créer un tableau de la taille du nombre de pneus en réserve il faut donc compter le nombre de pneus non null avant
+        //Ici ton tableau aura les éléments tous au début et les trous à la fin
         Pneu[] pneus = new Pneu[NOMBRE_PNEUS_EN_RESERVE];
         int compteur = 0;
         for (int i = 0; i < pneusEnReserve.length; i++) {
@@ -100,9 +107,11 @@ public class Pilote {
                 compteur++;
             }
         }
+        //MR Il faut vérifier si compteur n'est pas 0 pour éviter la division par zéro
         moyenne = moyenne / compteur;
         //j'aurais du rajouter le formateur de maniere suivante #'##0.00 pour la moyenne car il
         //est demander de mettre le bon formatage des milier et des décimales
+        //MR En effet, il faut formater la moyenne pour l'afficher correctement
         String resultat = "pression moyenne des pneus de la réserve: " + moyenne;
 
         return resultat;
